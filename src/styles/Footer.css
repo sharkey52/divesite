@@ -1,0 +1,33 @@
+.footer {
+  background-color: #1a1a1a;
+  color: white;
+  padding: 1rem;
+}
+
+.footer__column ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Mobile Layout */
+@media (max-width: 768px) {
+  .footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #1a1a1a;
+    color: white;
+    padding: 1rem;
+  }
+  
+  .footer__column {
+    margin-bottom: 1rem;
+  }
+  
+  .footer__column ul {
+    text-align: center;
+  }
+}
+

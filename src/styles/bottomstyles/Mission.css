@@ -1,0 +1,17 @@
+.mission-page {
+  background-color: black;
+  color: blue;
+  padding: 20px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.description {
+  font-size: 18px;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+

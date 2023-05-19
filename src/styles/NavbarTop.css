@@ -1,0 +1,68 @@
+.navbar-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #000000;
+  border-bottom: 1px solid #ddd;
+}
+
+.navbar-top__logo {
+  /* Add your logo styles here */
+}
+
+.navbar-top__username {
+  /* Add your username styles here */
+}
+
+.navbar-top__settings {
+  position: relative;
+  cursor: pointer;
+}
+
+.navbar-top__settings ul {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #000000;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  min-width: 150px;
+  z-index: 10;
+}
+
+.navbar-top__settings ul li {
+  padding: 0.5rem 1rem;
+}
+
+.navbar-top__settings ul li:hover {
+  background-color: #1976d2;
+}
+
+.navbar-top__settings:hover ul {
+  display: block;
+}
+
+.mode-button {
+  /* Add styles for non-selected mode buttons here */
+}
+
+.mode-button--selected {
+  background-color: #ccc;
+}
+
+.logo-image {
+  height: 1cm;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .navbar-top {
+    padding: 0.5rem;
+  }
+}
+

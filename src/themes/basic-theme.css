@@ -1,0 +1,52 @@
+body.basic .app {
+  background-color: #ffffff;
+}
+
+body.basic .navbar-top {
+  background-color: #1a1a1a;
+  color: white;
+}
+
+body.basic .navbar-top__settings ul {
+  background-color: #000000;
+}
+
+body.basic .mode-button--selected {
+  background-color: #ccc;
+}
+
+body.basic .navbar-left {
+  background-color: #333;
+  color: #fff;
+}
+
+body.basic .dashboard {
+  background-color: #f0f0f0;
+}
+
+body.basic .footer {
+  background-color: #1a1a1a;
+  color: white;
+}
+
+body.basic .diveLogBook {
+  background-color: #f9f9f9;
+}
+
+body.basic form {
+  background-color: #f2f2f2;
+}
+
+body.basic form input[type="text"] {
+  border: 1px solid #ccc;
+}
+
+body.basic form button[type="submit"] {
+  background-color: #2196f3;
+  color: #fff;
+}
+
+body.basic .navbar-top__settings ul li:hover {
+  background-color: #1976d2;
+}
+

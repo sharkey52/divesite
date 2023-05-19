@@ -1,0 +1,33 @@
+/* Slideshow.css */
+.slideshow {
+  height: 60vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.slide {
+  animation: slide 50s infinite;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slide img {
+  height: 100%;
+  width: auto;
+}
+
+@media (max-width: 600px) {
+  /* Adjustments for mobile views */
+  .slideshow {
+    height: 50vh;
+  }
+}
+

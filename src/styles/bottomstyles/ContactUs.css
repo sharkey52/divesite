@@ -1,0 +1,50 @@
+.contact-form {
+  margin: 20px auto;
+  max-width: 400px;
+  padding: 20px;
+  background-color: black;
+  color: white;
+}
+
+.contact-form h2 {
+  margin-bottom: 10px;
+  color: blue;
+}
+
+.contact-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-form .form-group {
+  margin-bottom: 10px;
+}
+
+.contact-form label {
+  margin-bottom: 5px;
+  color: blue;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 5px;
+  border: none;
+  background-color: #f5f5f5;
+}
+
+.contact-form textarea {
+  min-height: 100px;
+}
+
+.contact-form button {
+  padding: 10px;
+  background-color: blue;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.contact-form button:hover {
+  background-color: darkblue;
+}
+

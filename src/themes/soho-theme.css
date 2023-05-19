@@ -1,0 +1,52 @@
+body.soho .app {
+  background-color: #ffcc99;
+}
+
+body.soho .navbar-top {
+  background-color: #ff9900;
+  color: white;
+}
+
+body.soho .navbar-top__settings ul {
+  background-color: #000000;
+}
+
+body.soho .mode-button--selected {
+  background-color: #ccc;
+}
+
+body.soho .navbar-left {
+  background-color: #ff9900;
+  color: #fff;
+}
+
+body.soho .dashboard {
+  background-color: #f0f0f0;
+}
+
+body.soho .footer {
+  background-color: #1a1a1a;
+  color: white;
+}
+
+body.soho .diveLogBook {
+  background-color: #f9f9f9;
+}
+
+body.soho form {
+  background-color: #f2f2f2;
+}
+
+body.soho form input[type="text"] {
+  border: 1px solid #ccc;
+}
+
+body.soho form button[type="submit"] {
+  background-color: #2196f3;
+  color: #fff;
+}
+
+body.soho .navbar-top__settings ul li:hover {
+  background-color: #1976d2;
+}
+

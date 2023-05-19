@@ -1,0 +1,36 @@
+.careers-container {
+  padding: 20px;
+  background-color: black;
+  color: white;
+}
+
+.careers-title {
+  font-size: 32px;
+  color: blue;
+}
+
+.careers-description {
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+.careers-positions {
+  margin-top: 40px;
+}
+
+.positions-title {
+  font-size: 24px;
+  color: blue;
+}
+
+.positions-list {
+  list-style-type: none;
+  padding-left: 20px;
+  margin-top: 10px;
+}
+
+.careers-contact {
+  margin-top: 40px;
+  font-size: 16px;
+}
+

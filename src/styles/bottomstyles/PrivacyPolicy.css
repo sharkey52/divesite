@@ -1,0 +1,15 @@
+.privacy-policy-container {
+  background-color: black;
+  color: white;
+  padding: 20px;
+}
+
+.privacy-policy-container h2 {
+  color: blue;
+  margin-bottom: 10px;
+}
+
+.privacy-policy-container p {
+  margin-bottom: 20px;
+}
+

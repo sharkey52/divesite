@@ -1,0 +1,71 @@
+.diveLogBook {
+  position: relative;
+  padding: 1em;
+  height: calc(100vh - 2em);
+  overflow-y: auto;
+}
+
+.diveLog {
+  margin-bottom: 1em;
+  padding: 1em;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+
+.addDiveButton {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  width: 1cm;
+  height: 1cm;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+  font-size: 2em;
+  line-height: 1cm;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.ReactModal__Content {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  bottom: 1em;
+  left: 1em;
+  background: white;
+  overflow: auto;
+  border-radius: 4px;
+  outline: none;
+  padding: 20px;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .diveLogBook {
+    height: auto;
+    padding: 0.5em;
+  }
+
+  .addDiveButton {
+    top: 0.5em;
+    right: 0.5em;
+    width: 0.5cm;
+    height: 0.5cm;
+    font-size: 1em;
+    line-height: 0.5cm;
+  }
+
+  .ReactModal__Content {
+    top: 0.5em;
+    right: 0.5em;
+    bottom: 0.5em;
+    left: 0.5em;
+    padding: 10px;
+  }
+}
+

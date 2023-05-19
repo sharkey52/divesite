@@ -1,0 +1,37 @@
+/* divesite/src/styles/bottomstyles.css */
+
+.cookies-container {
+  background-color: black;
+  color: white;
+  padding: 20px;
+}
+
+.cookies-title {
+  color: blue;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.cookies-content {
+  margin-bottom: 20px;
+}
+
+.cookies-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.cookies-button {
+  background-color: blue;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.cookies-note {
+  font-style: italic;
+}
+

@@ -1,0 +1,28 @@
+/* Adjust the file paths as needed */
+.faq-container {
+  background-color: black;
+  color: white;
+  padding: 20px;
+}
+
+.faq-list {
+  margin-top: 20px;
+}
+
+.faq-item {
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: blue;
+}
+
+h3 {
+  color: blue;
+  margin-bottom: 10px;
+}
+
+p {
+  color: white;
+}
+

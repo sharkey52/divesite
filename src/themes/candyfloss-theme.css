@@ -1,0 +1,52 @@
+body.candyfloss .app {
+  background-color: #ffbbcc;
+}
+
+body.candyfloss .navbar-top {
+  background-color: #ff6699;
+  color: white;
+}
+
+body.candyfloss .navbar-top__settings ul {
+  background-color: #000000;
+}
+
+body.candyfloss .mode-button--selected {
+  background-color: #ccc;
+}
+
+body.candyfloss .navbar-left {
+  background-color: #ff6699;
+  color: #fff;
+}
+
+body.candyfloss .dashboard {
+  background-color: #f0f0f0;
+}
+
+body.candyfloss .footer {
+  background-color: #1a1a1a;
+  color: white;
+}
+
+body.candyfloss .diveLogBook {
+  background-color: #f9f9f9;
+}
+
+body.candyfloss form {
+  background-color: #f2f2f2;
+}
+
+body.candyfloss form input[type="text"] {
+  border: 1px solid #ccc;
+}
+
+body.candyfloss form button[type="submit"] {
+  background-color: #2196f3;
+  color: #fff;
+}
+
+body.candyfloss .navbar-top__settings ul li:hover {
+  background-color: #1976d2;
+}
+

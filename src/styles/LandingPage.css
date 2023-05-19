@@ -1,0 +1,54 @@
+/* LandingPage.css */
+
+.landing-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-image: url('back.jpeg');
+  background-size: cover;
+  background-position: center;
+}
+
+.landing-page h1 {
+  color: #1e90ff;
+  margin-bottom: 20px;
+}
+
+.landing-page form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.landing-page form label {
+  color: #1e90ff;
+  margin-bottom: 10px;
+}
+
+.landing-page form input {
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #1e90ff;
+}
+
+.landing-page form button {
+  padding: 10px 20px;
+  margin-top: 10px;
+  color: #fff;
+  background-color: #1e90ff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.landing-page form button:hover {
+  background-color: #4169e1;
+}
+

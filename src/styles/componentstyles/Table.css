@@ -1,0 +1,23 @@
+/* Table.css */
+.tableWrapper {
+  height: 35vh;
+  overflow: auto;
+}
+
+.table {
+  width: 100%;
+  text-align: left;
+}
+
+.table th, .table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+@media (max-width: 600px) {
+  /* Adjustments for mobile views */
+  .tableWrapper {
+    height: 45vh;
+  }
+}
+

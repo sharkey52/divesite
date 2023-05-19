@@ -1,0 +1,28 @@
+.navbar-left {
+  background-color: #333;
+  color: #fff;
+  padding: 1rem;
+  width: 200px;
+}
+
+.navbar-left ul {
+  list-style: none;
+  padding: 0;
+}
+
+.navbar-left li {
+  padding: 0.5rem 0;
+  cursor: pointer;
+}
+
+.navbar-left li:hover {
+  background-color: #444;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .navbar-left {
+    display: none;
+  }
+}
+
