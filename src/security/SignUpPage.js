@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { handleLogin } from './auth';
-import '../styles/LandingPage.css';
+import '../styles/SignUpPage.css';
 
-const LandingPage = ({ onLoginSuccess }) => {
+const SignUpPage = ({ onSignUp }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -14,21 +14,18 @@ const LandingPage = ({ onLoginSuccess }) => {
     setPassword(e.target.value);
   };
 
-  const submitLogin = (e) => {
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handleSignUp = async (e) => {
     e.preventDefault();
-    handleLogin(username, password)
-      .then(({ cognitoUser, userType }) => {
-        console.log(`Logged in as ${userType}`);
-        onLoginSuccess(); // Call the onLoginSuccess function
-      })
-      .catch((error) => {
-        console.error(`Login failed with error: ${error}`);
-      });
+    await onSignUp(username, password, email);
   };
 
   return (
-    <div className="landing-page">
-      <h1>Welcome to the Landing Page</h1>
+    <div className="signup-page">
+      <h1>Sign Up</h1>
       <form>
         <label>
           Username:
@@ -46,11 +43,19 @@ const LandingPage = ({ onLoginSuccess }) => {
             onChange={handlePasswordChange}
           />
         </label>
-        <button type="submit" onClick={submitLogin}>Login</button>
+        <label>
+          Email:
+          <input
+            type="email"
+            value={email}
+            onChange={handleEmailChange}
+          />
+        </label>
+        <button type="submit" onClick={handleSignUp}>Sign Up</button>
       </form>
     </div>
   );
 };
 
-export default LandingPage;
+export default SignUpPage;
 

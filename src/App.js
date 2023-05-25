@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { getCurrentUserAsync, handleLogin, handleLogout, handleSignUp } from './security/auth';
-import handleNewPassword from './security/NewPasswordHandler';
+import { getCurrentUserAsync, handleLogin, handleLogout } from './security/auth';
 import './styles/App.css';
 import NavbarTop from './NavbarTop';
 import NavbarLeftUser from './NavbarLeftUser';
@@ -8,10 +7,9 @@ import NavbarLeftStaff from './NavbarLeftStaff';
 import NavbarLeftManager from './NavbarLeftManager';
 import Footer from './Footer';
 import Dashboard from './Dashboard';
-import DiveCenter from './components/BookDive'; 
+import DiveCenter from './components/BookDive';
 import DiveLogBook from './components/DiveLogBook';
 import LandingPage from './security/LandingPage';
-import NewPasswordForm from './security/NewPasswordForm';
 import LoadingScreen from './LoadingScreen';
 import { ThemeContext } from './ThemeContext';
 
@@ -20,7 +18,6 @@ const App = () => {
   const [mode, setMode] = useState('user');
   const [username, setUsername] = useState('John Doe');
   const [content, setContent] = useState('landing');
-  const [newPasswordRequired, setNewPasswordRequired] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const { theme } = useContext(ThemeContext);
 
@@ -44,15 +41,13 @@ const App = () => {
 
   const login = async (username, password) => {
     try {
-      const user = await handleLogin(username, password);
-      setUser(user);
+      const { cognitoUser, userType } = await handleLogin(username, password);
+      setUser(cognitoUser);
+      setMode(userType);
       setUsername(username);
       setContent('dashboard');
     } catch (error) {
       console.error('Login error:', error);
-      if (error.code === 'PasswordResetRequiredException') {
-        setNewPasswordRequired(true);
-      }
     }
   };
 
@@ -63,30 +58,21 @@ const App = () => {
     setContent('landing');
   };
 
-  const signUp = async (username, password, email) => {
-    try {
-      await handleSignUp(username, password, email);
-      login(username, password);
-    } catch (error) {
-      console.error('Sign up error:', error);
-    }
-  };
-
-  const handleNewPassword = async (username, temporaryPassword, newPassword) => {
-    try {
-      await handleNewPassword(username, temporaryPassword, newPassword);
-      await login(username, newPassword);
-    } catch (error) {
-      console.error('Error changing password and logging in:', error);
-    }
-  };
-
-  const handleModeChange = (newMode) => {
-    setMode(newMode);
-  };
-
   const handleContentChange = (newContent) => {
     setContent(newContent);
+  };
+
+  const getSideBar = () => {
+    switch (mode) {
+      case 'user':
+        return <NavbarLeftUser onContentChange={handleContentChange} />;
+      case 'staff':
+        return <NavbarLeftStaff />;
+      case 'manager':
+        return <NavbarLeftManager />;
+      default:
+        return null;
+    }
   };
 
   if (isLoading) {
@@ -95,18 +81,18 @@ const App = () => {
 
   return (
     <div className={`app ${theme}`}>
-      {content === 'landing' && !newPasswordRequired && <LandingPage onLogin={login} onSignUp={signUp} />}
-      {newPasswordRequired && <NewPasswordForm onNewPassword={handleNewPassword} />}
-      {content !== 'landing' && !newPasswordRequired && (
+      {content === 'landing' && (
+        <LandingPage onLogin={login} onLoginSuccess={() => setContent('dashboard')} />
+      )}
+      {content !== 'landing' && (
         <>
-          <NavbarTop username={username} onModeChange={handleModeChange} onLogout={logout} />
-          {mode === 'user' && <NavbarLeftUser onContentChange={handleContentChange} />}
-          {mode === 'staff' && <NavbarLeftStaff />}
-          {mode === 'manager' && <NavbarLeftManager />}
+          <NavbarTop username={username} onLogout={logout} />
+          <div className="navbar-left-mobile">{getSideBar()}</div>
+          <div className="navbar-left-desktop">{getSideBar()}</div>
           {content === 'dashboard' && <Dashboard />}
-          {content === 'bookadive' && <DiveCenter />} {/* Added line to include DiveCenter */}
+          {content === 'bookadive' && <DiveCenter />}
           {content === 'logbook' && <DiveLogBook />}
-          <Footer />
+          <Footer className="footer-desktop" />
         </>
       )}
     </div>
