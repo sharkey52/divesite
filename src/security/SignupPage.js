@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { handleLogin, handleSignup } from './auth';
-import '../styles/LandingPage.css';
+import { handleSignup } from './auth';
 
-const LandingPage = ({ onLoginSuccess }) => {
+const SignupPage = ({ onSignupSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -20,19 +19,6 @@ const LandingPage = ({ onLoginSuccess }) => {
     setConfirmPassword(e.target.value);
   };
 
-  const submitLogin = (e) => {
-    e.preventDefault();
-    handleLogin(email, password)
-      .then(({ cognitoUser, userType }) => {
-        console.log(`Logged in as ${userType}`);
-        onLoginSuccess(); // Call the onLoginSuccess function
-      })
-      .catch((error) => {
-        console.error(`Login failed with error: ${error}`);
-        setError(`Login failed with error: ${error}`);
-      });
-  };
-
   const submitSignup = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
@@ -46,7 +32,7 @@ const LandingPage = ({ onLoginSuccess }) => {
     handleSignup(email, password)
       .then((cognitoUser) => {
         console.log('Signed up successfully');
-        onLoginSuccess();
+        onSignupSuccess();
       })
       .catch((error) => {
         setError(`Signup failed with error: ${error}`);
@@ -55,8 +41,8 @@ const LandingPage = ({ onLoginSuccess }) => {
   };
 
   return (
-    <div className="landing-page">
-      <h1>Welcome to the Landing Page</h1>
+    <div className="signup-page">
+      <h1>Signup Page</h1>
       <form>
         <label>
           Email:
@@ -83,12 +69,11 @@ const LandingPage = ({ onLoginSuccess }) => {
           />
         </label>
         <button type="submit" onClick={submitSignup}>Signup</button>
-        <button type="submit" onClick={submitLogin}>Login</button>
         {error && <p style={{ color: 'red' }}>{error}</p>}
       </form>
     </div>
   );
 };
 
-export default LandingPage;
+export default SignupPage;
 

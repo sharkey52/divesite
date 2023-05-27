@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { getCurrentUserAsync, handleLogin, handleLogout } from './security/auth';
+import { getCurrentUserAsync, handleLogin, handleLogout, handleSignup } from './security/auth';
 import './styles/App.css';
 import NavbarTop from './NavbarTop';
 import NavbarLeftUser from './NavbarLeftUser';
@@ -10,6 +10,7 @@ import Dashboard from './Dashboard';
 import DiveCenter from './components/BookDive';
 import DiveLogBook from './components/DiveLogBook';
 import LandingPage from './security/LandingPage';
+import SignupPage from './security/SignupPage'; // <-- Add this import statement
 import LoadingScreen from './LoadingScreen';
 import { ThemeContext } from './ThemeContext';
 
@@ -51,8 +52,20 @@ const App = () => {
     }
   };
 
+  // Signup function
+  const signup = async (email, password) => {
+    try {
+      const cognitoUser = await handleSignup(email, password);
+      setUser(cognitoUser);
+      setUsername(email);
+      setContent('dashboard');
+    } catch (error) {
+      console.error('Signup error:', error);
+    }
+  };
+
   const logout = () => {
-    handleLogout(user);
+    handleLogout();
     setUser(null);
     setUsername(null);
     setContent('landing');
@@ -84,7 +97,10 @@ const App = () => {
       {content === 'landing' && (
         <LandingPage onLogin={login} onLoginSuccess={() => setContent('dashboard')} />
       )}
-      {content !== 'landing' && (
+      {content === 'signup' && (
+        <SignupPage onSignupSuccess={signup} />
+      )}
+      {content !== 'landing' && content !== 'signup' && (
         <>
           <NavbarTop username={username} onLogout={logout} />
           <div className="navbar-left-mobile">{getSideBar()}</div>
