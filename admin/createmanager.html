@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Create User in Cognito User Pool</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      text-align: center;
+      padding: 20px;
+      background-color: #333333;
+      color: #ffffff;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .form-group label {
+      margin-bottom: 5px;
+    }
+
+    input {
+      padding: 12px;
+      font-size: 16px;
+      width: 33.33%;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.976.0.min.js"></script>
+</head>
+
+<body>
+  <h1>Create User</h1>
+  <div class="form-group">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+  </div>
+  <div class="form-group">
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+  </div>
+  <div class="form-group">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+  </div>
+  <button onclick="createUser()">Create User</button>
+
+  <script>
+    AWS.config.region = 'eu-west-2';
+
+    function createUser() {
+      var userPoolId = 'eu-west-2_gs3SdN5pu';
+      var clientId = '20sahufl343tuj7rq5rgcv53uv';
+
+      var username = document.getElementById('username').value;
+      var password = document.getElementById('password').value;
+      var email = document.getElementById('email').value;
+
+      var poolData = {
+        UserPoolId: userPoolId,
+        ClientId: clientId
+      };
+
+      var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+
+      var attributeList = [];
+      var attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute({
+        Name: 'email',
+        Value: email
+      });
+
+      attributeList.push(attributeEmail);
+
+      var dataUsername = {
+        Name: 'preferred_username',
+        Value: username
+      };
+      var attributeUsername = new AmazonCognitoIdentity.CognitoUserAttribute(dataUsername);
+
+      attributeList.push(attributeUsername);
+
+      userPool.signUp(email, password, attributeList, null, function (err, result) {
+        if (err) {
+          alert(err.message || JSON.stringify(err));
+          return;
+        }
+        console.log(result);
+        alert('User created successfully. Please check your email to verify your account.');
+      });
+    }
+  </script>
+</body>
+
+</html>
+
