@@ -3,20 +3,19 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 14
+      nodejs: 18
     commands:
       - echo Installing source code dependencies...
       - npm install
   pre_build:
     commands:
-      - echo Running tests...
+      - echo Pre-build phase...
   build:
     commands:
-      - echo Building React app...
+      - echo Build started on `date`
       - npm run build
-
 artifacts:
   files:
     - '**/*'
-  base-directory: 'build'
+  base-directory: build
 
