@@ -5,6 +5,7 @@ import atlasImage from './img.jpg';
 import iosQRCode from './img.jpg';
 import androidQRCode from './img.jpg';
 import conservationImage from './img.jpg';
+import Mission from './mission.js';
 
 const LandingPage = ({ onLoginSuccess }) => {
   const [email, setEmail] = useState('');
@@ -84,19 +85,7 @@ const LandingPage = ({ onLoginSuccess }) => {
         </form>
       </div>
       <div className="our-mission-page">
-        <h1>Our Mission</h1>
-        <div className="mission">
-          <h2>Sustainability</h2>
-          <p>Short paragraph about sustainability...</p>
-        </div>
-        <div className="mission">
-          <h2>Science</h2>
-          <p>Short paragraph about science...</p>
-        </div>
-        <div className="mission">
-          <h2>Safety</h2>
-          <p>Short paragraph about safety...</p>
-        </div>
+        <Mission />
       </div>
       <div className="all-around-world-page">
         <h1>All Around The World</h1>

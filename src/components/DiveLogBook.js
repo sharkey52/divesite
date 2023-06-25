@@ -11,7 +11,7 @@ const DiveLogBook = () => {
   const [isFormOpen, setFormOpen] = useState(false);
 
   // Generate 33 dummy dive data
-  const dummyDives = Array.from({length: 33}, (_, index) => ({
+  const dummyDives = Array.from({length:133}, (_, index) => ({
     date: `2022-12-${index + 1 < 10 ? '0' + (index + 1) : index + 1}`,
     location: ["Beach", "Cave", "Reef"][index % 3],
     depth: `${20 + (index % 10)}m`,
@@ -65,7 +65,7 @@ const DiveLogBook = () => {
           loader={<h4>Loading...</h4>}
         >
           {dives.map((dive, index) => (
-            <div key={index}>
+            <div className='diveitem' key={index}>
               {dive.date}, {dive.location}, {dive.depth}
             </div>
           ))}
