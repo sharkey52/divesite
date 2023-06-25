@@ -1,23 +1,12 @@
-import React, { useState, useContext } from 'react';
+import React, { useState} from 'react';
 import './styles/NavbarTop.css';
 import logo from './media/logo.png';
 
 const NavbarTop = ({ username, onModeChange, onLogout }) => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [selectedMode, setSelectedMode] = useState('user');
-
-  const handleModeChange = (mode) => {
-    setSelectedMode(mode);
-    onModeChange(mode);
-    setDropdownVisible(false);
-  };
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
-  };
-
-  const modeButtonClass = (mode) => {
-    return selectedMode === mode ? 'mode-button mode-button--selected' : 'mode-button';
   };
 
   return (

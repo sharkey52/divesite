@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect} from 'react';
 import { getCurrentUserAsync, handleLogin, handleLogout, handleSignup } from './security/auth';
 import './styles/App.css';
 import NavbarTop from './NavbarTop';

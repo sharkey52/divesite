@@ -44,7 +44,7 @@ const LandingPage = ({ onLoginSuccess }) => {
       setError("Passwords don't match");
       return;
     }
-    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(password)) {
+    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#%&])(?=.{8,})/.test(password)) {
       setError('Password must have at least 1 uppercase letter, one lower case letter, one number, one punctuation symbol, and be at least 8 characters long.');
       return;
     }
@@ -86,6 +86,7 @@ const LandingPage = ({ onLoginSuccess }) => {
       </div>
       <div className="our-mission-page">
         <Mission />
+	<h4>hi there</h4>
       </div>
       <div className="all-around-world-page">
         <h1>All Around The World</h1>
@@ -96,11 +97,11 @@ const LandingPage = ({ onLoginSuccess }) => {
         <h1>Download our application!</h1>
         <div className="app-images">
           <div className="app-image">
-            <img src={iosQRCode} alt="Image for iOS" />
+            <img src={iosQRCode} alt="alt"/>
             <p>For iOS</p>
           </div>
           <div className="app-image">
-            <img src={androidQRCode} alt="Image for Android" />
+            <img src={androidQRCode} alt="alt"/>
             <p>For Android</p>
           </div>
         </div>
