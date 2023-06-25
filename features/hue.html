@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Underwater Image Correction</title>
+    <script async src="https://docs.opencv.org/master/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
+</head>
+<body>
+    <h1>Underwater Image Correction</h1>
+
+    <div>
+        <input type="file" id="imageFile" name="imageFile" accept="image/*" />
+        <button id="uploadButton" onclick="loadImage()">Upload</button>
+    </div>
+
+    <div>
+        <img id="originalImage" style="display:none;" />
+        <canvas id="canvas"></canvas>
+    </div>
+
+    <script type="text/javascript">
+        function onOpenCvReady() {
+            document.getElementById('status').innerHTML = 'OpenCV.js is ready.';
+        }
+
+        function loadImage() {
+            let inputImage = document.getElementById('imageFile');
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+            let img = new Image();
+
+            img.src = URL.createObjectURL(inputImage.files[0]);
+            img.onload = function() {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0, img.width, img.height);
+
+                let src = cv.imread(canvas);
+                let dst = new cv.Mat();
+
+                // Convert image to YUV color space
+                cv.cvtColor(src, dst, cv.COLOR_RGBA2YUV);
+
+                // Split the image into separate color planes
+                let planes = new cv.MatVector();
+                cv.split(dst, planes);
+
+                // Equalize the Y channel
+                cv.equalizeHist(planes.get(0), planes.get(0));
+
+                // Merge the results back into one image
+                cv.merge(planes, dst);
+
+                // Convert image back to RGB color space
+                cv.cvtColor(dst, dst, cv.COLOR_YUV2RGBA);
+
+                cv.imshow(canvas, dst);
+
+                src.delete();
+                dst.delete();
+                planes.delete();
+            }
+        }
+    </script>
+</body>
+</html>
+

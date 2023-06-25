@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Current Location</title>
+    <style>
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+        #coordinateButton {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px;
+            background: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <button id="coordinateButton">Get Coordinates</button>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-cTUw08cD9aJxEn6PEL4n7RZLN-3fQ_c&callback=initMap" async defer></script>
+    <script>
+        var map, infoWindow, marker;
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: -34.397, lng: 150.644},
+                zoom: 18,
+                mapTypeId: google.maps.MapTypeId.SATELLITE,				
+                disableDefaultUI: true
+            });
+            infoWindow = new google.maps.InfoWindow;
+            marker = new google.maps.Marker({
+                position: map.getCenter(),
+                map: map
+            });
+            map.addListener('center_changed', function() {
+                marker.setPosition(map.getCenter());
+            });
+
+            // Try HTML5 geolocation.
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    map.setCenter(pos);
+                }, function() {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                });
+            } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+
+            document.getElementById('coordinateButton').addEventListener('click', function() {
+                var center = map.getCenter();
+                alert('Coordinates: ' + center.lat() + ', ' + center.lng());
+            });
+        }
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation ?
+                'Error: The Geolocation service failed.' :
+                'Error: Your browser doesn\'t support geolocation.');
+            infoWindow.open(map);
+        }
+    </script>
+</body>
+</html>
+

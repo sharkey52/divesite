@@ -1,12 +1,10 @@
 import React, { useState, useContext } from 'react';
 import './styles/NavbarTop.css';
 import logo from './media/logo.png';
-import { ThemeContext } from './ThemeContext';
 
 const NavbarTop = ({ username, onModeChange, onLogout }) => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [selectedMode, setSelectedMode] = useState('user');
-  const { theme, setTheme } = useContext(ThemeContext);
 
   const handleModeChange = (mode) => {
     setSelectedMode(mode);
@@ -20,11 +18,6 @@ const NavbarTop = ({ username, onModeChange, onLogout }) => {
 
   const modeButtonClass = (mode) => {
     return selectedMode === mode ? 'mode-button mode-button--selected' : 'mode-button';
-  };
-
-  const handleThemeChange = (theme) => {
-    setTheme(theme);
-    setDropdownVisible(false);
   };
 
   return (

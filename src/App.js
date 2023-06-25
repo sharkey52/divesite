@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext} from 'react';
 import { getCurrentUserAsync, handleLogin, handleLogout, handleSignup } from './security/auth';
 import './styles/App.css';
 import NavbarTop from './NavbarTop';
@@ -12,7 +12,6 @@ import DiveLogBook from './components/DiveLogBook';
 import LandingPage from './security/LandingPage';
 import SignupPage from './security/SignupPage'; // <-- Add this import statement
 import LoadingScreen from './LoadingScreen';
-import { ThemeContext } from './ThemeContext';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -20,7 +19,6 @@ const App = () => {
   const [username, setUsername] = useState('John Doe');
   const [content, setContent] = useState('landing');
   const [isLoading, setIsLoading] = useState(true);
-  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     const checkCurrentUser = async () => {
@@ -93,7 +91,7 @@ const App = () => {
   }
 
   return (
-    <div className={`app ${theme}`}>
+    <div className={`app`}>
       {content === 'landing' && (
         <LandingPage onLogin={login} onLoginSuccess={() => setContent('dashboard')} />
       )}

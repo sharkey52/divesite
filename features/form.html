@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dive Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: lightblue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+        form {
+            width: 90%;
+            max-width: 600px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        input[type="text"], input[type="datetime-local"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.1rem;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        .range-value {
+            font-size: 1.1rem;
+        }
+        input[type="submit"], input[type="button"] {
+            margin-top: 20px;
+            padding: 15px 20px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.2rem;
+            border-radius: 5px;
+        }
+        input[type="submit"]:hover, input[type="button"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dive Details</h1>
+    <form>
+        <div class="form-group">
+            <label for="location">Location</label>
+            <input type="text" id="location" name="location">
+        </div>
+
+        <div class="form-group">
+            <label for="date">Date</label>
+            <input type="datetime-local" id="date" name="date">
+        </div>
+
+        <div class="form-group">
+            <label>Dive Type</label>
+            <input type="radio" id="deep" name="diveType" value="deep">
+            <label for="deep">Deep</label><br>
+            <input type="radio" id="stream" name="diveType" value="stream">
+            <label for="stream">Stream</label><br>
+            <input type="radio" id="wreck" name="diveType" value="wreck">
+            <label for="wreck">Wreck</label><br>
+            <input type="radio" id="night" name="diveType" value="night">
+            <label for="night">Night</label><br>
+            <input type="radio" id="ice" name="diveType" value="ice">
+            <label for="ice">Ice</label><br>
+            <input type="radio" id="altitude" name="diveType" value="altitude">
+            <label for="altitude">Altitude</label><br>
+            <input type="radio" id="cave" name="diveType" value="cave">
+            <label for="cave">Cave</label><br>
+            <input type="radio" id="freedive" name="diveType" value="freedive">
+            <label for="freedive">Freedive</label><br>
+            <input type="radio" id="training" name="diveType" value="training">
+            <label for="training">Training</label><br>
+            <input type="radio" id="technical" name="diveType" value="technical">
+            <label for="technical">Technical</label>
+        </div>
+
+        <div class="form-group">
+            <label for="maxDepth">Max Depth</label>
+            <input type="range" id="maxDepth" name="maxDepth" min="0" max="50">
+            <span id="maxDepthValue">0</span>
+        </div>
+
+        <div class="form-group">
+            <label for="diveTime">Dive Time (in minutes)</label>
+            <input type="range" id="diveTime" name="diveTime" min="0" max="100">
+            <span id="diveTimeValue">0</span>
+        </div>
+
+        <div class="form-group">
+            <label for="waterTemperature">Water Temperature</label>
+            <input type="range" id="waterTemperature" name="waterTemperature" min="-10" max="30">
+            <span id="waterTemperatureValue">0</span>
+        </div>
+
+        <div class="form-group">
+            <label for="visibility">Visibility (in meters)</label>
+            <input type="range" id="visibility" name="visibility" min="0" max="25">
+            <span id="visibilityValue">0</span>
+        </div>
+
+        <div class="form-group">
+            <label for="comments">Comments</label>
+            <textarea id="comments" name="comments"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="features">Additional Features</label>
+            <select id="features" name="features">
+                <option value="weight">Weight</option>
+                <option value="weather">Weather</option>
+                <option value="buddies">Buddies</option>
+                <option value="waterCondition">Water Condition</option>
+                <option value="suit">Suit</option>
+                <option value="tank">Tank</option>
+                <option value="photoUpload">Photo Upload</option>
+            </select>
+        </div>
+
+        <input type="submit" value="Post">
+        <input type="button" value="Save">
+    </form>
+
+    <script>
+        // Setting current date and time
+        let dateInput = document.querySelector('#date');
+        dateInput.value = new Date().toISOString().slice(0,16);
+
+        // Updating range slider value display
+        let rangeInputs = document.querySelectorAll('input[type="range"]');
+        rangeInputs.forEach(rangeInput => {
+            let valueDisplay = document.querySelector('#' + rangeInput.id + 'Value');
+            valueDisplay.textContent = rangeInput.value;
+            rangeInput.addEventListener('input', () => {
+                valueDisplay.textContent = rangeInput.value;
+            });
+        });
+
+        // Dive type changing max depth
+        let diveTypeInputs = document.querySelectorAll('input[name="diveType"]');
+        let maxDepthInput = document.querySelector('#maxDepth');
+        diveTypeInputs.forEach(diveTypeInput => {
+            diveTypeInput.addEventListener('change', () => {
+                if (diveTypeInput.id === 'technical') {
+                    maxDepthInput.max = 100;
+                    maxDepthInput.value = 0;
+                    document.querySelector('#maxDepthValue').textContent = '0';
+                } else {
+                    maxDepthInput.max = 50;
+                    maxDepthInput.value = 0;
+                    document.querySelector('#maxDepthValue').textContent = '0';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

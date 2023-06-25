@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scrolling effect</title>
+    <style>
+        body, html {
+            height: 200%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+        #background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-image: url('background.jpg');
+            background-size: cover;
+        }
+        #grey_overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-image: url('grey_overlay.png');
+            background-size: cover;
+        }
+        #text {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 150px;
+            z-index: 2;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="background"></div>
+    <div id="grey_overlay"></div>
+    <div id="text">25 Meters</div>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            var scrollPos = window.pageYOffset || document.documentElement.scrollTop;
+            var maxScroll = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+            var overlay = document.getElementById('grey_overlay');
+            var text = document.getElementById('text');
+            var opacity = scrollPos / maxScroll;
+            var numberValue = 25 * (1 - opacity);
+
+            overlay.style.opacity = opacity.toFixed(2);
+
+            if (numberValue.toFixed(0) <= 0) {
+                text.innerHTML = "Scroll upwards";
+            } else {
+                text.innerHTML = numberValue.toFixed(0) + " Meters";
+            }
+        });
+    </script>
+</body>
+</html>
+
