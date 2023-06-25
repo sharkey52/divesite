@@ -1,4 +1,5 @@
 import React from 'react';
+import './styles/Dashboard.css';
 
 const Dashboard = ({ user, onLogout }) => {
   const userType = user?.userType;
@@ -11,7 +12,6 @@ const Dashboard = ({ user, onLogout }) => {
     <div className="dashboard">
       <h1>Welcome to the Dashboard</h1>
       <p>User Type: {userType}</p>
-      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 };

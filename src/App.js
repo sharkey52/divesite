@@ -103,7 +103,6 @@ const App = () => {
       {content !== 'landing' && content !== 'signup' && (
         <>
           <NavbarTop username={username} onLogout={logout} />
-          <div className="navbar-left-mobile">{getSideBar()}</div>
           <div className="navbar-left-desktop">{getSideBar()}</div>
           {content === 'dashboard' && <Dashboard />}
           {content === 'bookadive' && <DiveCenter />}
