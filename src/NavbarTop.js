@@ -37,22 +37,7 @@ const NavbarTop = ({ username, onModeChange, onLogout }) => {
         <span onClick={toggleDropdown}>Settings</span>
         {dropdownVisible && (
           <ul>
-            <li className={modeButtonClass('user')} onClick={() => handleModeChange('user')}>
-              Mode: User
-            </li>
-            <li className={modeButtonClass('staff')} onClick={() => handleModeChange('staff')}>
-              Mode: Staff
-            </li>
-            <li className={modeButtonClass('manager')} onClick={() => handleModeChange('manager')}>
-              Mode: Manager
-            </li>
             <li onClick={onLogout}>Logout</li>
-            <li onClick={() => handleThemeChange('light')}>Theme: Light</li>
-            <li onClick={() => handleThemeChange('dark')}>Theme: Dark</li>
-            <li onClick={() => handleThemeChange('ocean')}>Theme: Ocean</li>
-            <li onClick={() => handleThemeChange('candyfloss')}>Theme: Candy Floss</li>
-            <li onClick={() => handleThemeChange('soho')}>Theme: Soho</li>
-            <li onClick={() => handleThemeChange('basic')}>Theme: Basic</li>
             <li>Zoom</li>
             <li>Other Settings</li>
           </ul>
