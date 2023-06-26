@@ -2,10 +2,15 @@ import React, { useState } from 'react';
 import { handleLogin, handleSignup } from './auth';
 import '../styles/LandingPage.css';
 import atlasImage from './img.jpg';
-import iosQRCode from './img.jpg';
 import androidQRCode from './img.jpg';
 import conservationImage from './img.jpg';
 import Mission from './mission.js';
+import World from './world.js';
+import Apps from './apppage.js';
+import Conservation from './conservation.js';
+import Groups from './groups.js';
+import Trips from './extended.js';
+
 
 const LandingPage = ({ onLoginSuccess }) => {
   const [email, setEmail] = useState('');
@@ -86,46 +91,21 @@ const LandingPage = ({ onLoginSuccess }) => {
       </div>
       <div className="our-mission-page">
         <Mission />
-	<h4>hi there</h4>
       </div>
       <div className="all-around-world-page">
-        <h1>All Around The World</h1>
-        <img src={atlasImage} alt="Atlas" />
-        <p>Numbers and stats around the page...</p>
+        <World />
       </div>
       <div className="get-the-app-page">
-        <h1>Download our application!</h1>
-        <div className="app-images">
-          <div className="app-image">
-            <img src={iosQRCode} alt="alt"/>
-            <p>For iOS</p>
-          </div>
-          <div className="app-image">
-            <img src={androidQRCode} alt="alt"/>
-            <p>For Android</p>
-          </div>
-        </div>
+        <Apps />
       </div>
       <div className="conservation-page">
-        <h1>Conservation</h1>
-        <div className="conservation-content">
-          <img src={conservationImage} alt="Conservation" />
-          <p>Text about conservation...</p>
-        </div>
+        <Conservation />
       </div>
       <div className="group-bookings-page">
-        <h1>Group Bookings</h1>
-        <button>Groups</button>
-        <button>Schools</button>
-        <button>Corporate</button>
-        <button>Training</button>
+        <Groups />
       </div>
       <div className="extended-trips-page">
-        <h1>Extended Trips</h1>
-        <button>Research</button>
-        <button>Zero to Hero</button>
-        <button>Gap Years</button>
-        <button>Become an Instructor</button>
+        <Trips />
       </div>
       <div className="signup-page">
         <h1>Signup</h1>

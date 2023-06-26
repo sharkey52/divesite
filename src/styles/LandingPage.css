@@ -71,12 +71,12 @@
 }
 
 .login-page {
-  background-color: #87CEFA;
+  background-color:#87CEFA;
 }
 
-.our-mission-page {
+/* .our-mission-page {
   background-color: #6495ED;
-}
+} */
 
 .all-around-world-page {
   background-color: #4682B4;
@@ -101,10 +101,6 @@
 .contact-us-page {
   background-color: black;
   color: white;
-}
-
-.mission {
-  margin: 10px;
 }
 
 .qr-codes {
