@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Dexie from "dexie";
-import "../styles/componentstyles/DiveLogForm.css"; // Import the CSS file
+import "../styles/componentstyles/DiveLogForm.css";
 
 const DiveLogForm = () => {
   const [formData, setFormData] = useState({
+    id: "",
     date: "",
     time: "",
     location: "",
@@ -23,17 +24,28 @@ const DiveLogForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const payload = {
+      httpMethod: "PUT",
+      body: JSON.stringify({
+        id: formData.id,
+        location: formData.location,
+        depth: parseInt(formData.depth),
+        water_type: formData.water_temperature,
+        temperature: parseInt(formData.temperature)
+      })
+    };
+
     try {
       await axios.put(
-        "https://v2vb8f6w9a.execute-api.eu-west-2.amazonaws.com/prod/divelogs",
-        formData,
+        "https://i14lwecdl6.execute-api.eu-west-2.amazonaws.com/test",
+        payload,
         { headers: { 'Content-Type': 'application/json' } }
       );
       console.log("Data submitted successfully");
     } catch (error) {
       if (!navigator.onLine) {
         try {
-          await saveDataOffline(formData);
+          await saveDataOffline(payload);
           console.log("Data saved offline");
         } catch (offlineError) {
           console.error("Error saving data offline:", offlineError);
@@ -58,10 +70,21 @@ const DiveLogForm = () => {
     const unsyncedLogs = await db.diveLogs.toArray();
 
     for (const log of unsyncedLogs) {
+      const payload = {
+        httpMethod: "PUT",
+        body: JSON.stringify({
+          id: log.id,
+          location: log.location,
+          depth: parseInt(log.depth),
+          water_type: log.water_temperature,
+          temperature: parseInt(log.temperature)
+        })
+      };
+
       try {
         await axios.put(
-          "https://v2vb8f6w9a.execute-api.eu-west-2.amazonaws.com/prod/divelogs",
-          log,
+          "https://i14lwecdl6.execute-api.eu-west-2.amazonaws.com/test",
+          payload,
           { headers: { 'Content-Type': 'application/json' } }
         );
         await db.diveLogs.delete(log.id);
@@ -127,50 +150,50 @@ const DiveLogForm = () => {
         <input
           type="text"
           name="length"
-          value={
-formData.length}
-onChange={handleChange}
-/>
-</div>
-<div>
-<label>Temperature:</label>
-<input
-       type="text"
-       name="temperature"
-       value={formData.temperature}
-       onChange={handleChange}
-     />
-</div>
-<div>
-<label>Company:</label>
-<input
-       type="text"
-       name="company"
-       value={formData.company}
-       onChange={handleChange}
-     />
-</div>
-<div>
-<label>Weather:</label>
-<input
-       type="text"
-       name="weather"
-       value={formData.weather}
-       onChange={handleChange}
-     />
-</div>
-<div>
-<label>Water Temperature:</label>
-<input
-       type="text"
-       name="water_temperature"
-       value={formData.water_temperature}
-       onChange={handleChange}
-     />
-</div>
-<button type="submit">Submit</button>
-</form>
-);
+          value={formData.length}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label>Temperature:</label>
+        <input
+          type="text"
+          name="temperature"
+          value={formData.temperature}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label>Company:</label>
+        <input
+          type="text"
+          name="company"
+          value={formData.company}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label>Weather:</label>
+        <input
+          type="text"
+          name="weather"
+          value={formData.weather}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label>Water Temperature:</label>
+        <input
+          type="text"
+          name="water_temperature"
+          value={formData.water_temperature}
+          onChange={handleChange}
+        />
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  );
 };
 
 export default DiveLogForm;
+

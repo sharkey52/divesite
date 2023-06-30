@@ -1,0 +1,16 @@
+h1 {
+  color:black;
+}
+
+a {
+  padding:5px;
+  margin:20px;
+  background-color:#001247;
+  color: white;
+  font-size:25px;
+  border:none;
+}
+
+button:hover {
+  color:grey;
+}
