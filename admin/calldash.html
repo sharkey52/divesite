@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Information</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+        .pricing-container {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+        }
+        .tick-cross-container {
+            margin-top: 50px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        #stopwatch {
+            font-size: 24px;
+        }
+        .tick, .cross {
+            font-size: 40px;
+            cursor: pointer;
+        }
+        .tick {
+            color: green;
+        }
+        .cross {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your Business Name: YOUR_BUSINESS_NAME</h1>
+        <p>Country: YOUR_COUNTRY_NAME</p>
+        <div id="stopwatch">00:00:00</div>
+        <div class="pricing-container">
+            <div id="pricingScheme"></div>
+        </div>
+        <div class="tick-cross-container">
+            <div class="tick">&#10004;</div>
+            <div class="cross">&#10008;</div>
+        </div>
+    </div>
+
+    <script>
+        let startTime;
+        let stopwatchInterval;
+
+        function startStopwatch() {
+            startTime = Date.now();
+            stopwatchInterval = setInterval(updateStopwatch, 1000);
+        }
+
+        function updateStopwatch() {
+            const stopwatchElement = document.getElementById('stopwatch');
+            const currentTime = Date.now() - startTime;
+            const hours = Math.floor(currentTime / 3600000);
+            const minutes = Math.floor((currentTime % 3600000) / 60000);
+            const seconds = Math.floor((currentTime % 60000) / 1000);
+            stopwatchElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function getRandomPricingScheme() {
+            const pricingSchemes = ["Scheme 1", "Scheme 2", "Scheme 3"];
+            const randomIndex = Math.floor(Math.random() * pricingSchemes.length);
+            return pricingSchemes[randomIndex];
+        }
+
+        function sendDataToAPI(stopwatchTime, pricingScheme) {
+            const businessName = "YOUR_BUSINESS_NAME"; // Replace with actual business name
+            const country = "YOUR_COUNTRY_NAME"; // Replace with actual country name
+            const data = {
+                businessName,
+                country,
+                stopwatchTime,
+                pricingScheme
+            };
+
+            // Replace 'API_ENDPOINT_URL' with your actual API endpoint URL
+            fetch('API_ENDPOINT_URL', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log(result); // You can handle the API response here
+            })
+            .catch(error => {
+                console.error('Error sending data:', error);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const startButton = document.createElement('button');
+            startButton.textContent = 'Start Timer';
+            startButton.addEventListener('click', function() {
+                startButton.style.display = 'none';
+                startStopwatch();
+                const pricingSchemeElement = document.getElementById('pricingScheme');
+                const randomPricingScheme = getRandomPricingScheme();
+                pricingSchemeElement.textContent = randomPricingScheme;
+
+                // Set up tick and cross click event handlers
+                document.querySelector('.tick').addEventListener('click', function() {
+                    clearInterval(stopwatchInterval);
+                    const stopwatchTime = document.getElementById('stopwatch').textContent;
+                    sendDataToAPI(stopwatchTime, randomPricingScheme);
+                });
+
+                document.querySelector('.cross').addEventListener('click', function() {
+                    clearInterval(stopwatchInterval);
+                    const stopwatchTime = document.getElementById('stopwatch').textContent;
+                    sendDataToAPI(stopwatchTime, randomPricingScheme);
+                });
+            });
+
+            document.querySelector('.container').appendChild(startButton);
+        });
+    </script>
+</body>
+</html>
+
