@@ -11,7 +11,7 @@ const Dashboard = ({ user, onLogout }) => {
 
   return (
     <div className="Dashboard">
-      <h1>Welcome to the Dashboard</h1>
+      <h1>This is Sharksoft</h1>
       <p>User Type: {userType}</p>
       return <MyComponent />;
     </div>

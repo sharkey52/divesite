@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { getCurrentUserAsync, handleLogin, handleLogout, handleSignup } from './security/auth';
 import './styles/App.css';
 import NavbarTop from './NavbarTop';
@@ -16,7 +16,7 @@ import LoadingScreen from './LoadingScreen';
 const App = () => {
   const [user, setUser] = useState(null);
   const [mode, setMode] = useState('user');
-  const [username, setUsername] = useState('John Doe');
+  const [username, setUsername] = useState(null); // Change the initial value to null
   const [content, setContent] = useState('landing');
   const [isLoading, setIsLoading] = useState(true);
 
@@ -26,7 +26,7 @@ const App = () => {
         const currentUser = await getCurrentUserAsync();
         if (currentUser) {
           setUser(currentUser);
-          setUsername(currentUser.getUsername());
+          setUsername(currentUser.getUsername()); // Update the username here
           setContent('dashboard');
         }
         setIsLoading(false);
@@ -100,7 +100,7 @@ const App = () => {
       )}
       {content !== 'landing' && content !== 'signup' && (
         <>
-          <NavbarTop username={username} onLogout={logout} />
+          <NavbarTop username={username} onLogout={logout} /> {/* Display the user's name */}
           <div className="navbar-left-desktop">{getSideBar()}</div>
           {content === 'dashboard' && <Dashboard />}
           {content === 'bookadive' && <DiveCenter />}

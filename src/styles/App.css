@@ -1,3 +1,4 @@
+/* Desktop Styles */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -57,38 +58,57 @@ body {
   padding: 0;
 }
 
-/* Media Queries */
-@media (max-width: 768px) {
+/* Mobile Styles */
+@media (max-width: 600px) {
+  /* Global styles */
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+  }
+
+  /* Mobile-friendly styles */
   .app {
-    grid-template-rows: auto 1fr auto;
-    grid-template-columns: 1fr;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
 
   .navbar-top {
-    padding: 0.5rem;
+    padding: 10px;
+    background-color: #007bff;
+    color: #ffffff;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
   }
 
   .navbar-left-user,
   .navbar-left-staff,
   .navbar-left-manager {
-    grid-row: 5 / 6;
-    grid-column: 1 / 2;
-    padding: 0.5rem;
-    flex-direction: row;
-    justify-content: space-around;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    display: block;
   }
 
   .dashboard {
-    grid-row: 4 / 5;
-    grid-column: 1 / 2;
-    padding: 0.5rem;
+    background-color: #ffffff;
+    margin-top: 10px;
+    padding: 10px;
   }
 
   .footer {
-    grid-row: 5 / 6;
-    grid-column: 1 / 2;
-    padding: 0.5rem;
-    display: none;
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    color: #ffffff;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
   }
 }
- 
+
