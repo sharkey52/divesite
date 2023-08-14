@@ -37,7 +37,7 @@ const DiveLogForm = () => {
 
     try {
       await axios.put(
-        "https://i14lwecdl6.execute-api.eu-west-2.amazonaws.com/test",
+        "https://4t4mr4lnjj.execute-api.eu-west-2.amazonaws.com/prod",
         payload,
         { headers: { 'Content-Type': 'application/json' } }
       );
@@ -83,7 +83,7 @@ const DiveLogForm = () => {
 
       try {
         await axios.put(
-          "https://i14lwecdl6.execute-api.eu-west-2.amazonaws.com/test",
+          "https://4t4mr4lnjj.execute-api.eu-west-2.amazonaws.com/prod",
           payload,
           { headers: { 'Content-Type': 'application/json' } }
         );

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #3498db;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        main {
+            padding: 2rem;
+        }
+
+        .input-section {
+            margin-bottom: 1rem;
+        }
+
+        .results-section {
+            border-top: 1px solid #ccc;
+            padding-top: 1rem;
+        }
+    </style>
+    <title>Scuba Dive Planner</title>
+</head>
+<body>
+    <header>
+        <h1>Scuba Dive Planner</h1>
+    </header>
+    <main>
+        <div class="input-section">
+            <label for="depth">Maximum Depth (meters):</label>
+            <input type="number" id="depth" min="0">
+        </div>
+        <div class="input-section">
+            <label for="time">Dive Time (minutes):</label>
+            <input type="number" id="time" min="1">
+        </div>
+        <div class="input-section">
+            <label for="oxygen">Oxygen Percentage (Nitrox):</label>
+            <input type="number" id="oxygen" min="21" max="100">
+        </div>
+        <div class="input-section">
+            <label for="techDive">Technical Dive:</label>
+            <input type="checkbox" id="techDive">
+        </div>
+        <div class="input-section">
+            <button id="addTank">Add Tank</button>
+            <div id="tankInputs"></div>
+        </div>
+        <button id="calculate">Calculate</button>
+        <div class="results-section">
+            <p>Your Safe Dive Time:</p>
+            <span id="safeTime"></span>
+        </div>
+        <canvas id="diveChart"></canvas>
+    </main>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const calculateButton = document.getElementById("calculate");
+            const depthInput = document.getElementById("depth");
+            const timeInput = document.getElementById("time");
+            const oxygenInput = document.getElementById("oxygen");
+            const techDiveCheckbox = document.getElementById("techDive");
+            const safeTimeSpan = document.getElementById("safeTime");
+            const addTankButton = document.getElementById("addTank");
+            const tankInputsDiv = document.getElementById("tankInputs");
+
+            addTankButton.addEventListener("click", function () {
+                addTankInput();
+            });
+
+            calculateButton.addEventListener("click", function () {
+                const depth = parseFloat(depthInput.value);
+                const time = parseInt(timeInput.value);
+                const oxygenPercentage = parseFloat(oxygenInput.value) / 100;
+                const isTechDive = techDiveCheckbox.checked;
+
+                if (!isNaN(depth) && !isNaN(time) && !isNaN(oxygenPercentage)) {
+                    const tanks = gatherTankInputs();
+                    const safeTime = calculateSafeDiveTime(depth, time, oxygenPercentage, isTechDive, tanks);
+                    safeTimeSpan.textContent = `${safeTime.toFixed(2)} minutes`;
+
+                    // Calculate dive profile data
+                    const diveProfile = calculateDiveProfile(depth, time, oxygenPercentage, isTechDive, tanks);
+
+                    // Draw the dive profile graph
+                    drawDiveProfileGraph(diveProfile);
+                } else {
+                    safeTimeSpan.textContent = "Invalid input";
+                }
+            });
+
+            function addTankInput() {
+                const tankInput = document.createElement("div");
+                tankInput.classList.add("tank-input");
+                tankInput.innerHTML = `
+                    <label for="tankSize">Tank Size (cubic feet):</label>
+                    <input type="number" class="tank-size" min="1">
+                    <label for="mix">Gas Mix (Oxygen %):</label>
+                    <input type="number" class="mix" min="21" max="100">
+                `;
+                tankInputsDiv.appendChild(tankInput);
+            }
+
+            function gatherTankInputs() {
+                const tankInputs = document.querySelectorAll(".tank-input");
+                const tanks = [];
+                tankInputs.forEach(tankInput => {
+                    const tankSize = parseFloat(tankInput.querySelector(".tank-size").value);
+                    const mix = parseFloat(tankInput.querySelector(".mix").value) / 100;
+                    if (!isNaN(tankSize) && !isNaN(mix)) {
+                        tanks.push({ size: tankSize, mix: mix });
+                    }
+                });
+                return tanks;
+            }
+
+            function calculateSafeDiveTime(depth, time, oxygenPercentage, isTechDive, tanks) {
+                const ppo2Limit = isTechDive ? 1.4 : 1.6;
+                const tankFactors = calculateTankFactors(tanks, depth, oxygenPercentage);
+                const safeTime = Math.min(...tankFactors) * (20 * (10 / depth)) * (1 - (time / 60)) * ppo2Limit;
+                return Math.max(safeTime, 0);
+            }
+
+            function calculateTankFactors(tanks, depth, oxygenPercentage) {
+                return tanks.map(tank => {
+                    const mod = (depth / 10) + 1;
+                    const tankFactor = ((1 - (tank.mix - 0.21) / 0.79) / mod);
+                    return tankFactor;
+                });
+            }
+
+            function calculateDiveProfile(depth, time, oxygenPercentage, isTechDive, tanks) {
+                // Calculate your dive profile data here.
+                // This is a simplified example, you can replace it with more accurate calculations.
+                const diveProfileData = [];
+                for (let t = 0; t <= time; t += 5) {
+                    const depthAtTime = depth * (1 - (t / time));
+                    diveProfileData.push({ x: t, y: depthAtTime });
+                }
+                return {
+                    labels: diveProfileData.map(point => point.x),
+                    data: diveProfileData.map(point => point.y)
+                };
+            }
+
+            function drawDiveProfileGraph(profileData) {
+                const diveChartCanvas = document.getElementById("diveChart");
+                const diveProfileChart = new Chart(diveChartCanvas, {
+                    type: "line",
+                    data: {
+                        labels: profileData.labels,
+                        datasets: [{
+                            label: "Depth-Time Profile",
+                            data: profileData.data,
+                            fill: false,
+                            borderColor: "rgba(75, 192, 192, 1)",
+                            borderWidth: 2,
+                            pointRadius: 0
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            x: {
+                                type: "linear",
+                                position: "bottom",
+                                title: {
+                                    display: true,
+                                    text: "Time (minutes)"
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: "Depth (meters)"
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+

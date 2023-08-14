@@ -1,6 +1,6 @@
 import React from 'react';
 import './styles/Dashboard.css';
-import MyComponent from './centers.js'
+//import MyComponent from './centers.js'
 
 const Dashboard = ({ user, onLogout }) => {
   const userType = user?.userType;
@@ -13,7 +13,6 @@ const Dashboard = ({ user, onLogout }) => {
     <div className="Dashboard">
       <h1>This is Sharksoft</h1>
       <p>User Type: {userType}</p>
-      return <MyComponent />;
     </div>
   );
 };

@@ -1,0 +1,136 @@
+import React, { useRef, useEffect, useState } from 'react';
+import gsap from 'gsap';
+
+const MenuComponent = () => {
+  const menuRef = useRef(null);
+  const itemsRef = useRef([]);
+  const imagesRef = useRef([]);
+  const [menuWidth, setMenuWidth] = useState(0);
+  const [itemWidth, setItemWidth] = useState(0);
+  const [wrapWidth, setWrapWidth] = useState(0);
+  const [scrollSpeed, setScrollSpeed] = useState(0);
+  const [oldScrollY, setOldScrollY] = useState(0);
+  const [scrollY, setScrollY] = useState(0);
+  let y = 0;
+
+  const lerp = (v0, v1, t) => {
+    return v0 * (1 - t) + v1 * t;
+  };
+
+  const dispose = (scroll) => {
+    gsap.set(itemsRef.current, {
+      x: (i) => {
+        return i * itemWidth + scroll;
+      },
+      modifiers: {
+        x: (x, target) => {
+          const s = gsap.utils.wrap(-itemWidth, wrapWidth - itemWidth, parseInt(x));
+          return `${s}px`;
+        },
+      },
+    });
+  };
+
+  const handleMouseWheel = (e) => {
+    setScrollY((prevScrollY) => prevScrollY - e.deltaY * 0.9);
+  };
+
+  let touchStart = 0;
+  let touchX = 0;
+  let isDragging = false;
+
+  const handleTouchStart = (e) => {
+    touchStart = e.clientX || e.touches[0].clientX;
+    isDragging = true;
+    menuRef.current.classList.add('is-dragging');
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isDragging) return;
+    touchX = e.clientX || e.touches[0].clientX;
+    setScrollY((prevScrollY) => prevScrollY + (touchX - touchStart) * 2.5);
+    touchStart = touchX;
+  };
+
+  const handleTouchEnd = () => {
+    isDragging = false;
+    menuRef.current.classList.remove('is-dragging');
+  };
+
+  useEffect(() => {
+    const menuElement = menuRef.current;
+    const itemsElements = itemsRef.current;
+    const imagesElements = imagesRef.current;
+
+    setMenuWidth(menuElement.clientWidth);
+    setItemWidth(itemsElements[0].clientWidth);
+    setWrapWidth(itemsElements.length * itemWidth);
+
+    const handleResize = () => {
+      setMenuWidth(menuElement.clientWidth);
+      setItemWidth(itemsElements[0].clientWidth);
+      setWrapWidth(itemsElements.length * itemWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [itemWidth]);
+
+  useEffect(() => {
+    const render = () => {
+      requestAnimationFrame(render);
+      y = lerp(y, scrollY, 0.1);
+      dispose(y);
+
+      setScrollSpeed(y - oldScrollY);
+      setOldScrollY(y);
+
+      gsap.to(itemsRef.current, {
+        skewX: -scrollSpeed * 0.2,
+        rotate: scrollSpeed * 0.01,
+        scale: 1 - Math.min(100, Math.abs(scrollSpeed)) * 0.003,
+      });
+    };
+    render();
+  }, [oldScrollY, scrollSpeed]);
+
+  return (
+    <div
+      className="menu"
+      ref={menuRef}
+      onWheel={handleMouseWheel}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
+      <div className="menu--wrapper">
+        <div className="menu--item" ref={(el) => itemsRef.current.push(el)}>
+          <figure>
+            <img
+              src="https://images.unsplash.com/photo-1595265677860-9a3168007dc0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
+              alt=""
+              ref={(el) => imagesRef.current.push(el)}
+            />
+          </figure>
+        </div>
+        {/* Repeat the following block for other menu items */}
+        <div className="menu--item" ref={(el) => itemsRef.current.push(el)}>
+          <figure>
+            <img
+              src="https://images.unsplash.com/photo-1594786118579-95ba90c801ec?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
+              alt=""
+              ref={(el) => imagesRef.current.push(el)}
+            />
+          </figure>
+        </div>
+        {/* End of repetition */}
+      </div>
+    </div>
+  );
+};
+
+export default MenuComponent;
+
